@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公交</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-sha256/0.10.1/sha256.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        table tr th {
+            position: sticky;
+            top: 0;
+            background-color: lightgrey;
+            z-index: 1;
+        }
+
+        table tr td, th {
+            border: 1px solid black;
+            height: 100px;
+            font-size: xxx-large;
+        }
+
+        div.realtime {
+            font-size: xx-large;
+            text-align: center;
+        }
+
+        span.tip {
+            font-size: smaller;
+        }
+
+        tbody tr td:first-child {
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        input[type=radio] {
+            width: 100px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div style="font-size: xx-large">
+    <div id="updateTime"></div>
+    <div id="route" style="border: 1px solid black; height: 100px;line-height: 100px;font-size: xxx-large;">
+        <input type="radio" id="radio225" checked="checked" name="group"/><label for="radio225">225路</label>
+        <input type="radio" id="radio230" name="group"/><label for="radio230">230路</label>
+    </div>
+    <table style="width: 100%;">
+        <thead>
+        <tr>
+            <th style="width: 40%">站点</th>
+            <th style="width: 30%" id="car1_head"></th>
+            <th style="width: 30%" id="car2_head"></th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+<script src="index.js?v=3"></script>
+</body>
+</html>
