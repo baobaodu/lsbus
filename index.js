@@ -107,6 +107,7 @@ const App = {
                             arriveTime: o.ArriveTime,
                         }
                     })
+                    segment.firstLastTimeStr = realtime.FirtLastShiftInfo
                     this.refreshTime = new Date(realtime.ServerTime)
                 })
             }
@@ -227,6 +228,13 @@ const App = {
                 return []
             }
             return segment.carList
+        },
+        firstLastTimeStr: function () {
+            let segment = this.segmentList.find(o => o.id === this.currentSegmentId)
+            if (!segment) {
+                return '首末班：'
+            }
+            return segment.firstLastTimeStr
         },
     }
 };
