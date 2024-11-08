@@ -3,67 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>公交</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/js-sha256/0.10.1/sha256.js"></script>
-    <style>
-        table {
-            border-collapse: collapse;
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        table tr th {
-            position: sticky;
-            top: 0;
-            background-color: lightgrey;
-            z-index: 1;
-        }
-
-        table tr td, th {
-            border: 1px solid black;
-            height: 100px;
-            font-size: xxx-large;
-        }
-
-        div.realtime {
-            font-size: xx-large;
-            text-align: center;
-        }
-
-        span.tip {
-            font-size: smaller;
-        }
-
-        tbody tr td:first-child {
-            text-align: right;
-            padding-right: 50px;
-        }
-
-        input[type=radio] {
-            width: 100px;
-            height: 30px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <script src="//unpkg.com/vue@3"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css">
+    <!-- import JavaScript -->
+    <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/js-sha256/0.10.1/sha256.js"></script>
+    <script src="//unpkg.com/element-plus"></script>
 </head>
 <body>
-<div style="font-size: xx-large">
-    <div id="updateTime"></div>
-    <div id="route" style="border: 1px solid black; height: 100px;line-height: 100px;font-size: xxx-large;">
-        <input type="radio" id="radio225" checked="checked" name="group"/><label for="radio225">225路</label>
-        <input type="radio" id="radio230" name="group"/><label for="radio230">230路</label>
-    </div>
-    <table style="width: 100%;">
-        <thead>
-        <tr>
-            <th style="width: 40%">站点</th>
-            <th style="width: 30%" id="car1_head"></th>
-            <th style="width: 30%" id="car2_head"></th>
-        </tr>
-        </thead>
-        <tbody id="tbody">
-        </tbody>
-    </table>
+<div id="app">
+    <el-card>
+        <template #header>
+            <div class="card-header">
+                <span>数据刷新时间：{{refreshTimeStr}}</span>
+            </div>
+        </template>
+        <el-tabs v-model="currentLineLocalCode" class="demo-tabs" @tab-change="changeLine">
+            <el-tab-pane :label="line.name" :name="line.code" v-for="line in lineList"
+                         :key="line.code"></el-tab-pane>
+        </el-tabs>
+        <el-table :data="stationList">
+            <el-table-column prop="name" label="前往 ➡️️" width="130px">
+                <template #default="scope">
+                    <span :style="{color: isImportantStation(scope.row.name)? 'red': null}">{{ scope.row.name }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column>
+                <template #header>
+                    <el-radio-group v-model="currentSegmentId" size="small" @change="changeSegment">
+                        <el-radio-button :value="segment.id" :label="segment.name" v-for="segment in segmentList"
+                                         :key="segment.id"/>
+                    </el-radio-group>
+                </template>
+                <template #default="scope">
+                    <span>{{getStationCarDesc(scope.row.id)}}</span>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-card>
 </div>
-<script src="index.js?v=3"></script>
+<script src="index.js?v=2411081200"></script>
 </body>
 </html>
