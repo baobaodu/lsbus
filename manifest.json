@@ -1,0 +1,13 @@
+{
+  "name": "公交",
+  "short_name": "公交",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "160x160",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone"
+}
