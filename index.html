@@ -30,8 +30,9 @@
             <el-tab-pane :label="line.name" :name="line.code" v-for="line in lineList"
                          :key="line.code"></el-tab-pane>
         </el-tabs>
-        <el-alert :closable="false">{{firstLastTimeStr}}</el-alert>
-        <el-table :data="stationList">
+        <el-alert :closable="false" type="error" v-show="initializing">加载中...</el-alert>
+        <el-alert :closable="false" v-show="!initializing">{{firstLastTimeStr}}</el-alert>
+        <el-table :data="stationList" v-show="!initializing">
             <el-table-column prop="name" label="前往 ➡️️" width="130px">
                 <template #default="scope">
                     <span :style="{color: isImportantStation(scope.row.name)? 'red': null}">{{ scope.row.name }}</span>

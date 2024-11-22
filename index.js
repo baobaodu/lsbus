@@ -5,6 +5,7 @@ const App = {
             carUrlTemplate: 'http://223.111.7.137:2001/BusService/Query_ByStationIDReturnAll/?RouteID=${RouteID}&IsmainsubCombine=1&StationID=${StationID}&timeStamp=${timestamp}&Random=${random}&SignKey=${signKey}',
             fetchKey: 'f7b2914081174a55bf563056fb25d3ae',
             refreshTime: null,
+            refreshLocalTime: null,
             currentLineLocalCode: '',
             lineList: [{
                 code: 'line230',
@@ -30,7 +31,8 @@ const App = {
             /*stationList: [],
             carList: [],*/
             importantStationNameList: ['市民之家', '康居路', '农科站', '金谷佳苑'],
-            segmentListCache: {}
+            segmentListCache: {},
+            initializing: true,
         };
     },
     mounted() {
@@ -44,8 +46,16 @@ const App = {
             this.refreshLine()
             // 定时刷新车辆
             setInterval(() => {
+                // 避免意外并发
+                if (this.refreshLocalTime && (new Date().getTime() - this.refreshLocalTime.getTime()) <= 3000) {
+                    return
+                }
                 this.refreshCar()
             }, 5000)
+            // 切换检测
+            document.addEventListener('visibilitychange', () => {
+                this.initializing = true
+            })
         },
         refreshLine() {
             /*let line = this.getCurrentLine()
@@ -109,6 +119,8 @@ const App = {
                     })
                     segment.firstLastTimeStr = realtime.FirtLastShiftInfo
                     this.refreshTime = new Date(realtime.ServerTime)
+                    this.refreshLocalTime = new Date()
+                    this.initializing = false
                 })
             }
         },
