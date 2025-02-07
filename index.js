@@ -25,12 +25,18 @@ const App = {
                 routeId: '603201',
                 stationId1: '84210430080027015000',
                 stationId2: '08210430080106370000',
+            }, {
+                code: 'line106',
+                name: '106路',
+                routeId: '100601',
+                stationId1: '57201129075811296000', // 秋湖嘉苑
+                stationId2: '289', // 城南站
             }],
             segmentList: [],
             currentSegmentId: null,
             /*stationList: [],
             carList: [],*/
-            importantStationNameList: ['市民之家', '康居路', '农科站', '金谷佳苑'],
+            importantStationNameList: ['市民之家', '康居路', '农科站', '金谷佳苑', '秀园西苑', '水岸康城东'],
             segmentListCache: {},
             initializing: true,
         };
